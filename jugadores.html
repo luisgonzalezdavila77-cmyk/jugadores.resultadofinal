@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚽ Leyendas del Fútbol</title>
+    <link rel="stylesheet" href="lb.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- MENÚ -->
+    <input type="checkbox" id="menu-toggle">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">⚽ Leyendas</div>
+            <ul class="nav-menu">
+                <li><a href="#slide-messi">🐐 Messi</a></li>
+                <li><a href="#slide-ronaldo">🔥 Ronaldo</a></li>
+                <li><a href="#slide-neymar">✨ Neymar</a></li>
+                <li><a href="#modal" class="nav-vote">🗳️ Votar</a></li>
+            </ul>
+            <label for="menu-toggle" class="hamburger">
+                <span></span><span></span><span></span>
+            </label>
+        </div>
+    </nav>
+
+    <h1>🏆 Leyendas del Fútbol</h1>
+
+    <!-- RADIOS: controlan qué carta se muestra en el carrusel -->
+    <input type="radio" name="carta" id="slide-messi"   checked>
+    <input type="radio" name="carta" id="slide-ronaldo">
+    <input type="radio" name="carta" id="slide-neymar">
+
+    <!-- CHECKBOXES: controlan el voto de cada jugador -->
+    <input type="checkbox" id="vote-messi">
+    <input type="checkbox" id="vote-ronaldo">
+    <input type="checkbox" id="vote-neymar">
+
+    <!-- CARRUSEL PRINCIPAL -->
+    <section class="carrusel-wrapper">
+
+        <div class="carrusel-track">
+
+            <!-- CARTA MESSI -->
+            <div class="card messi" id="messi">
+                <img src="https://estaticos-futbol.unitel.bo/binrepository/929x579/-48c66/1024d427/none/419380222/FVXC/messi-llorando_101-9467457_20240715032120.jpg" alt="Messi">
+                <div class="card-content">
+                    <h3><i class="fas fa-star"></i> Lionel Messi</h3>
+                    <p>el boludo argentino</p>
+                    <div class="stats">
+                        <span>⚽ 8 Balones de Oro</span>
+                        <span>🏆 4 Champions</span>
+                    </div>
+                </div>
+                <label for="vote-messi" class="btn">🗳️ Votar</label>
+                <div class="celebracion">
+                    <img src="https://media1.tenor.com/m/Hq-Z2Y9U3ZAAAAAC/messi-crying-messi.gif" alt="gif messi">
+                    <p class="voted-label">¡Votado! ✅</p>
+                </div>
+                <div class="footer-info"><p><i class="fas fa-trophy"></i> sobrevalorado</p></div>
+            </div>
+
+            <!-- CARTA RONALDO -->
+            <div class="card ronaldo" id="ronaldo">
+                <img src="https://www.teleantioquia.co/wp-content/uploads/2025/06/Cristiano-Ronaldo-campeon-con-Portugal.jpg" alt="Ronaldo">
+                <div class="card-content">
+                    <h3><i class="fas fa-fire"></i> Cristiano Ronaldo</h3>
+                    <p>💪 Máquina de Goles</p>
+                    <div class="stats">
+                        <span>⚽ 5 Balones de Oro</span>
+                        <span>🏆 5 Champions</span>
+                    </div>
+                </div>
+                <label for="vote-ronaldo" class="btn">🗳️ Votar</label>
+                <div class="celebracion">
+                    <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGt4OXB1aWx5ZDEwbmoyYXRtN2E4YjJtOHVxcHR0NThkbjl2N3U4OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zrmzxLMgKN8SQrkdLz/giphy.gif" alt="gif ronaldo">
+                    <p class="voted-label">¡Votado! ✅</p>
+                </div>
+                <div class="footer-info"><p><i class="fas fa-crown"></i> el mejor de todos los tiempos</p></div>
+            </div>
+
+            <!-- CARTA NEYMAR -->
+            <div class="card neymar" id="neymar">
+                <img src="https://estaticos.elcolombiano.com/binrepository/848x565/12c0/780d565/none/11101/TPRQ/foto-neymar-jr-el-gran-ausente-en_47447896_20250320152203.jpg" alt="Neymar">
+                <div class="card-content">
+                    <h3><i class="fas fa-magic"></i> Neymar Jr</h3>
+                    <p>✨ El Mago Brasileño</p>
+                    <div class="stats">
+                        <span>⚽ 1 Champions</span>
+                        <span>🥇 1 Copa América</span>
+                    </div>
+                </div>
+                <label for="vote-neymar" class="btn">🗳️ Votar</label>
+                <div class="celebracion">
+                    <img src="https://media1.tenor.com/m/4ox6iuD7SGIAAAAd/neymar-neymar-jr.gif" alt="gif neymar">
+                    <p class="voted-label">¡Votado! ✅</p>
+                </div>
+                <div class="footer-info"><p><i class="fas fa-crown"></i> el principe que no quiso ser rey</p></div>
+            </div>
+
+        </div>
+
+        <!-- Flechas del carrusel -->
+        <div class="carrusel-nav">
+            <!-- Prev: Messi ← Neymar, Ronaldo ← Messi, Neymar ← Ronaldo -->
+            <label class="arr prev messi-prev"   for="slide-neymar">&#8249;</label>
+            <label class="arr prev ronaldo-prev" for="slide-messi">&#8249;</label>
+            <label class="arr prev neymar-prev"  for="slide-ronaldo">&#8249;</label>
+
+            <!-- Next: Messi → Ronaldo, Ronaldo → Neymar, Neymar → Messi -->
+            <label class="arr next messi-next"   for="slide-ronaldo">&#8250;</label>
+            <label class="arr next ronaldo-next" for="slide-neymar">&#8250;</label>
+            <label class="arr next neymar-next"  for="slide-messi">&#8250;</label>
+        </div>
+
+        <!-- Puntitos indicadores -->
+        <div class="carrusel-dots">
+            <label for="slide-messi"   class="dot"></label>
+            <label for="slide-ronaldo" class="dot"></label>
+            <label for="slide-neymar"  class="dot"></label>
+        </div>
+
+    </section>
+
+    <!-- MODAL -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📊 Resultados</h2>
+                <a href="#" class="close">&times;</a>
+            </div>
+            <div class="vote-stats">
+                <div class="stats-bar">
+                    <span class="stat-label">Messi <span id="count-messi">0</span> votos</span>
+                    <div class="bar messi-bar"><div class="fill"></div></div>
+                </div>
+                <div class="stats-bar">
+                    <span class="stat-label">Ronaldo <span id="count-ronaldo">0</span> votos</span>
+                    <div class="bar ronaldo-bar"><div class="fill"></div></div>
+                </div>
+                <div class="stats-bar">
+                    <span class="stat-label">Neymar <span id="count-neymar">0</span> votos</span>
+                    <div class="bar neymar-bar"><div class="fill"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p><i class="fas fa-copyright"></i> 2026 correo_cr7elcomandante@gmail.com | hecho por papi 💪 lgd</p>
+    </footer>
+
+    <script>
+        // Carga votos guardados o empieza en 0
+        const votes = JSON.parse(localStorage.getItem('votes')) || { messi: 0, ronaldo: 0, neymar: 0 };
+
+        // Actualiza los números y las barras en el modal
+        function updateStats() {
+            const total = votes.messi + votes.ronaldo + votes.neymar || 1;
+            ['messi', 'ronaldo', 'neymar'].forEach(p => {
+                document.getElementById('count-' + p).textContent = votes[p];
+                document.querySelector('.' + p + '-bar .fill').style.width = (votes[p] / total * 100) + '%';
+            });
+        }
+
+        // Al marcar un checkbox: suma voto, muestra GIF 2.5s y desmarca
+        document.querySelectorAll('#vote-messi, #vote-ronaldo, #vote-neymar').forEach(cb => {
+            cb.addEventListener('change', () => {
+                if (!cb.checked) return;
+                const player = cb.id.replace('vote-', '');
+                votes[player]++;
+                localStorage.setItem('votes', JSON.stringify(votes));
+                updateStats();
+                setTimeout(() => { cb.checked = false; }, 2500);
+            });
+        });
+
+        updateStats();
+    </script>
+
+</body>
+</html>

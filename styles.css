@@ -1,0 +1,503 @@
+/* ══════════════════════════════════════════════════════════
+   BASE
+   Estilos generales que aplican a toda la página
+══════════════════════════════════════════════════════════ */
+
+/* box-sizing: border-box hace que el padding no agrande los elementos */
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;                  /* quita el espacio blanco por defecto */
+    font-family: Arial, sans-serif;
+    /* fondo degradado circular: azul muy oscuro al centro, negro en los bordes */
+    background: radial-gradient(circle, #020617, #0f172a);
+    color: white;               /* texto blanco en toda la página */
+    text-align: center;
+}
+
+/* Título principal de la página */
+h1 {
+    margin: 20px;
+    font-size: 2rem;
+    /* sombra de luz blanca difusa alrededor del texto */
+    text-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   NAVBAR (barra de navegación)
+   Barra fija en la parte superior de la pantalla
+══════════════════════════════════════════════════════════ */
+
+.navbar {
+    background: rgba(2, 6, 23, 0.9); /* fondo casi negro semitransparente */
+    backdrop-filter: blur(10px);      /* efecto de vidrio esmerilado */
+    padding: 12px 0;
+    position: sticky;  /* se queda pegada arriba al hacer scroll */
+    top: 0;
+    z-index: 100;      /* se pone encima de todo lo demás */
+    border-bottom: 1px solid rgba(255,255,255,0.1); /* línea sutil abajo */
+}
+
+/* Contenedor interno que centra y limita el ancho del menú */
+.nav-container {
+    display: flex;
+    justify-content: space-between; /* logo a la izquierda, links a la derecha */
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;   /* centra el contenedor en la página */
+    padding: 0 20px;
+}
+
+/* Logo del sitio */
+.nav-logo h2 { margin: 0; font-size: 1.4rem; }
+
+/* Lista de links del menú */
+.nav-menu {
+    list-style: none; /* quita los puntos de la lista */
+    display: flex;    /* pone los links en fila horizontal */
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo de cada link del menú */
+.nav-link {
+    color: white;
+    text-decoration: none; /* quita el subrayado */
+    font-size: 0.95rem;
+    transition: color 0.3s; /* el cambio de color es suave */
+}
+
+/* Al pasar el mouse, el link se pone verde */
+.nav-link:hover { color: #22c55e; }
+
+/* Botón hamburguesa: oculto por defecto, solo aparece en móvil */
+.hamburger { display: none; cursor: pointer; }
+
+/* Cada línea del ícono hamburguesa ☰ */
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: white;
+    margin: 5px 0;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+/* ── RESPONSIVE: pantallas menores a 600px (celulares) ── */
+@media (max-width: 600px) {
+    /* Muestra el botón hamburguesa */
+    .hamburger { display: block; }
+
+    /* El menú se oculta y se convierte en lista vertical */
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;   /* se superpone sobre el contenido */
+        top: 60px; left: 0; right: 0;
+        background: #0f172a;
+        padding: 20px;
+        gap: 15px;
+    }
+
+    /* Cuando JavaScript agrega la clase "active", el menú aparece */
+    .nav-menu.active { display: flex; }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   CONTENEDOR DE CARTAS
+   Caja que agrupa las 3 tarjetas de jugadores
+══════════════════════════════════════════════════════════ */
+
+.contenedor {
+    display: flex;
+    justify-content: center; /* centra las cartas horizontalmente */
+    gap: 25px;               /* espacio entre cada carta */
+    flex-wrap: wrap;         /* si no caben en una fila, bajan a la siguiente */
+    padding: 40px 20px;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   CARTA (card)
+   Tarjeta individual de cada jugador
+══════════════════════════════════════════════════════════ */
+
+.card {
+    width: 280px;
+    border-radius: 20px;       /* esquinas redondeadas */
+    background: #1e293b;       /* fondo azul oscuro */
+    position: relative;        /* necesario para posicionar el GIF encima */
+    overflow: hidden;          /* oculta lo que se salga de la carta */
+    transition: transform 0.4s, box-shadow 0.4s; /* animación suave al hover */
+    display: flex;
+    flex-direction: column;    /* apila los elementos verticalmente */
+}
+
+/* Al pasar el mouse, la carta crece un poco */
+.card:hover { transform: scale(1.04); }
+
+/* Cada jugador tiene su propio color de brillo al hacer hover */
+.messi:hover   { box-shadow: 0 0 30px #3b82f6; } /* azul para Messi */
+.ronaldo:hover { box-shadow: 0 0 30px #ef4444; } /* rojo para Ronaldo */
+.neymar:hover  { box-shadow: 0 0 30px #22c55e; } /* verde para Neymar */
+
+
+/* ══════════════════════════════════════════════════════════
+   CARRUSEL
+   Galería de fotos dentro de cada carta
+══════════════════════════════════════════════════════════ */
+
+/* Contenedor del carrusel: oculta lo que se salga */
+.carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 15px 15px 0 0; /* solo redondea las esquinas de arriba */
+}
+
+/* Pista que contiene todas las diapositivas en fila */
+.carousel-track {
+    display: flex;
+    width: 100%;
+}
+
+/* Cada diapositiva ocupa el 100% del ancho y está oculta por defecto */
+.carousel-slide {
+    min-width: 100%;
+    display: none;
+    animation: fadeSlide 0.5s ease; /* animación al aparecer */
+}
+
+/* Solo la diapositiva con clase "active" se muestra */
+.carousel-slide.active { display: block; }
+
+/* Animación de entrada: aparece con un leve zoom */
+@keyframes fadeSlide {
+    from { opacity: 0; transform: scale(1.05); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* Imagen dentro de cada diapositiva */
+.carousel-slide img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;  /* recorta la imagen para que llene el espacio */
+    display: block;
+    transition: transform 0.4s;
+}
+
+/* Al hacer hover en la carta, la imagen activa hace un leve zoom */
+.card:hover .carousel-slide.active img { transform: scale(1.07); }
+
+/* Botones de flecha (anterior / siguiente) */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%); /* centra verticalmente */
+    background: rgba(0,0,0,0.55);
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%; /* forma circular */
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 5; /* encima de las imágenes */
+    transition: background 0.3s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+/* Al pasar el mouse, el botón se aclara y crece un poco */
+.carousel-btn:hover {
+    background: rgba(255,255,255,0.25);
+    transform: translateY(-50%) scale(1.15);
+}
+
+/* Posición de cada botón dentro del carrusel */
+.carousel-btn.prev { left: 8px; }   /* botón izquierdo */
+.carousel-btn.next { right: 8px; }  /* botón derecho */
+
+/* Contenedor de los puntitos indicadores */
+.carousel-dots {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%); /* centra horizontalmente */
+    display: flex;
+    gap: 6px;
+    z-index: 5;
+}
+
+/* Cada puntito */
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4); /* blanco semitransparente */
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+}
+
+/* El puntito activo es blanco sólido y más grande */
+.dot.active {
+    background: white;
+    transform: scale(1.3);
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   CONTENIDO DE LA CARTA
+   Nombre, descripción y estadísticas del jugador
+══════════════════════════════════════════════════════════ */
+
+.card-content {
+    padding: 15px 15px 5px;
+}
+
+.card-content h3 {
+    margin: 0 0 6px;
+    font-size: 1.1rem;
+}
+
+/* Descripción del jugador en gris claro */
+.card-content p {
+    margin: 0 0 10px;
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+/* Estadísticas: balones de oro, champions, etc. */
+.stats {
+    display: flex;
+    flex-direction: column; /* una estadística por línea */
+    gap: 4px;
+    font-size: 0.82rem;
+    color: #cbd5e1;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   BOTÓN VOTAR
+══════════════════════════════════════════════════════════ */
+
+.btn {
+    margin: 10px 15px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    /* degradado verde */
+    background: linear-gradient(45deg, #22c55e, #4ade80);
+    color: white;
+    font-size: 0.95rem;
+    font-weight: bold;
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: calc(100% - 30px); /* ocupa todo el ancho menos los márgenes */
+}
+
+/* Al pasar el mouse: crece y brilla en verde */
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 14px #22c55e;
+}
+
+/* Cuando el botón está desactivado (después de votar) */
+.btn:disabled {
+    background: linear-gradient(45deg, #166534, #15803d); /* verde más oscuro */
+    cursor: default;  /* el cursor no cambia a mano */
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   GIF DE CELEBRACIÓN
+   Se superpone sobre la carta cuando el usuario vota.
+   Está invisible por defecto; JavaScript agrega "show" para mostrarlo.
+══════════════════════════════════════════════════════════ */
+
+.celebracion {
+    position: absolute; /* se coloca encima de todo dentro de la carta */
+    inset: 0;           /* ocupa toda la carta (top/right/bottom/left = 0) */
+    background: rgba(0,0,0,0.82); /* fondo negro semitransparente */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;           /* invisible por defecto */
+    pointer-events: none; /* no bloquea clics cuando está oculto */
+    transform: scale(0.85);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    z-index: 20; /* encima de todo lo demás en la carta */
+    border-radius: 20px;
+}
+
+/* Cuando JavaScript agrega la clase "show", el GIF aparece */
+.celebracion.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+    animation: pulse 0.4s ease; /* pequeño rebote al aparecer */
+}
+
+/* Animación de rebote al aparecer el GIF */
+@keyframes pulse {
+    0%   { transform: scale(0.85); }
+    60%  { transform: scale(1.05); } /* crece un poco de más */
+    100% { transform: scale(1); }    /* vuelve al tamaño normal */
+}
+
+/* El GIF dentro del overlay */
+.celebracion img {
+    width: 85%;
+    max-width: 220px;
+    border-radius: 12px;
+    border: 3px solid #22c55e; /* borde verde */
+}
+
+/* Texto "¡Votado! ✅" debajo del GIF */
+.voted-label {
+    margin-top: 12px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #4ade80;
+    text-shadow: 0 0 10px #22c55e;
+    animation: glow 1s infinite alternate; /* parpadeo de luz */
+}
+
+/* Animación de brillo pulsante en el texto */
+@keyframes glow {
+    from { text-shadow: 0 0 6px #22c55e; }
+    to   { text-shadow: 0 0 20px #4ade80, 0 0 40px #22c55e; }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   FOOTER INFO (pie de cada carta)
+   Datos extra en la parte inferior de la tarjeta
+══════════════════════════════════════════════════════════ */
+
+.footer-info {
+    padding: 8px 15px 15px;
+    font-size: 0.78rem;
+    color: #64748b; /* gris apagado */
+}
+
+.footer-info p { margin: 3px 0; }
+
+
+/* ══════════════════════════════════════════════════════════
+   FOOTER (pie de página)
+   Barra inferior con los créditos del sitio
+══════════════════════════════════════════════════════════ */
+
+footer {
+    padding: 15px;
+    background: #020617; /* negro azulado */
+    margin-top: 30px;
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   MODAL (ventana emergente de resultados)
+   Aparece encima de todo al votar
+══════════════════════════════════════════════════════════ */
+
+/* Fondo oscuro que cubre toda la pantalla */
+.modal {
+    display: none;       /* oculto por defecto */
+    position: fixed;     /* cubre toda la pantalla sin importar el scroll */
+    inset: 0;
+    background: rgba(0,0,0,0.75); /* fondo negro semitransparente */
+    z-index: 200;        /* encima de absolutamente todo */
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Animación de aparición del fondo */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Cuadro blanco del modal */
+.modal-content {
+    background: #1e293b;
+    border-radius: 20px;
+    padding: 30px;
+    width: 90%;
+    max-width: 480px;
+    animation: slideUp 0.35s ease; /* sube desde abajo al aparecer */
+}
+
+/* Animación: el cuadro sube desde abajo */
+@keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* Encabezado del modal: título y botón de cerrar en la misma fila */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 { margin: 0; font-size: 1.2rem; }
+
+/* Botón × para cerrar el modal */
+.close {
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: #94a3b8;
+    transition: color 0.2s;
+}
+
+/* Al pasar el mouse, el × se pone blanco */
+.close:hover { color: white; }
+
+/* Contenedor de las 3 barras de estadísticas */
+.vote-stats { display: flex; flex-direction: column; gap: 14px; }
+
+/* Cada fila de estadística (etiqueta + barra) */
+.stats-bar { text-align: left; }
+
+/* Etiqueta con el nombre y número de votos */
+.stat-label {
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 5px;
+    color: #cbd5e1;
+}
+
+/* Barra de fondo gris */
+.bar {
+    background: #334155;
+    border-radius: 10px;
+    height: 14px;
+    overflow: hidden; /* oculta el relleno que se salga */
+}
+
+/* Relleno de color que crece según el porcentaje de votos */
+.fill {
+    height: 100%;
+    border-radius: 10px;
+    width: 0%;                    /* empieza en 0, JavaScript lo cambia */
+    transition: width 0.6s ease;  /* el crecimiento es animado */
+}
+
+/* Color de cada barra según el jugador */
+.messi-bar .fill   { background: linear-gradient(90deg, #3b82f6, #60a5fa); } /* azul */
+.ronaldo-bar .fill { background: linear-gradient(90deg, #ef4444, #f87171); } /* rojo */
+.neymar-bar .fill  { background: linear-gradient(90deg, #22c55e, #4ade80); } /* verde */

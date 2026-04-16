@@ -1,0 +1,311 @@
+/* ── BASE ── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle, #020617, #0f172a);
+    color: white;
+    text-align: center;
+}
+
+h1 {
+    padding: 24px;
+    font-size: 2rem;
+    text-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+
+/* ── INPUTS OCULTOS ── */
+input[type="radio"],
+input[type="checkbox"] { display: none; }
+
+/* ══════════════════════════════════════
+   MENÚ
+══════════════════════════════════════ */
+.navbar {
+    background: rgba(2,6,23,0.92);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 14px 24px;
+}
+
+.nav-logo { font-size: 1.3rem; font-weight: bold; }
+
+.nav-menu { list-style: none; display: flex; gap: 6px; }
+
+.nav-menu a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 7px 13px;
+    border-radius: 8px;
+    transition: background 0.25s;
+}
+
+.nav-menu a:hover { background: rgba(255,255,255,0.1); color: white; }
+
+.nav-vote {
+    background: linear-gradient(45deg, #22c55e, #4ade80);
+    color: white !important;
+    font-weight: bold;
+}
+
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.hamburger span { display: block; width: 24px; height: 3px; background: white; border-radius: 3px; transition: transform 0.3s, opacity 0.3s; }
+
+@media (max-width: 620px) {
+    .hamburger { display: flex; }
+    .nav-menu {
+        display: none; flex-direction: column;
+        position: absolute; top: 58px; left: 0; right: 0;
+        background: #0f172a; padding: 14px; gap: 4px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    #menu-toggle:checked ~ .navbar .nav-menu { display: flex; }
+    #menu-toggle:checked ~ .navbar .hamburger span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    #menu-toggle:checked ~ .navbar .hamburger span:nth-child(2) { opacity: 0; }
+    #menu-toggle:checked ~ .navbar .hamburger span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+}
+
+/* ══════════════════════════════════════
+   CARRUSEL PRINCIPAL
+   El track se desplaza según el radio :checked
+══════════════════════════════════════ */
+.carrusel-wrapper {
+    position: relative;
+    max-width: 360px;
+    margin: 0 auto 50px;
+    overflow: hidden;
+}
+
+/* Las 3 cartas en fila horizontal */
+.carrusel-track {
+    display: flex;
+    width: 300%;           /* 3 cartas × 100% */
+    transition: transform 0.5s ease;
+}
+
+/* Por defecto muestra Messi (primera carta) */
+#slide-messi:checked   ~ .carrusel-wrapper .carrusel-track { transform: translateX(0%); }
+#slide-ronaldo:checked ~ .carrusel-wrapper .carrusel-track { transform: translateX(-33.333%); }
+#slide-neymar:checked  ~ .carrusel-wrapper .carrusel-track { transform: translateX(-66.666%); }
+
+/* ── CARTA ── */
+.card {
+    width: 33.333%;        /* cada carta ocupa 1/3 del track */
+    flex-shrink: 0;
+    border-radius: 20px;
+    background: #1e293b;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.4s;
+}
+
+/* Foto principal de la carta */
+.card > img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    border-radius: 15px 15px 0 0;
+}
+
+/* Brillo de color por jugador cuando está activo */
+#slide-messi:checked   ~ .carrusel-wrapper .messi   { box-shadow: 0 0 30px #3b82f6; }
+#slide-ronaldo:checked ~ .carrusel-wrapper .ronaldo  { box-shadow: 0 0 30px #ef4444; }
+#slide-neymar:checked  ~ .carrusel-wrapper .neymar   { box-shadow: 0 0 30px #22c55e; }
+
+/* ── CONTENIDO CARTA ── */
+.card-content { padding: 14px 15px 6px; }
+.card-content h3 { font-size: 1.1rem; margin-bottom: 5px; }
+.card-content p  { font-size: 0.9rem; color: #94a3b8; margin-bottom: 8px; }
+.stats { display: flex; flex-direction: column; gap: 3px; font-size: 0.82rem; color: #cbd5e1; }
+
+/* ── BOTÓN VOTAR ── */
+.btn {
+    display: block;
+    margin: 10px 15px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    background: linear-gradient(45deg, #22c55e, #4ade80);
+    color: white;
+    font-size: 0.95rem;
+    font-weight: bold;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover { transform: scale(1.05); box-shadow: 0 0 14px #22c55e; }
+
+/* ── GIF CELEBRACIÓN ── */
+.celebracion {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transform: scale(0.85);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    z-index: 20;
+    border-radius: 20px;
+}
+
+#vote-messi:checked   ~ .carrusel-wrapper .messi   .celebracion,
+#vote-ronaldo:checked ~ .carrusel-wrapper .ronaldo .celebracion,
+#vote-neymar:checked  ~ .carrusel-wrapper .neymar  .celebracion {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+    animation: pulse 0.4s ease;
+}
+
+#vote-messi:checked   ~ .carrusel-wrapper .messi   .btn,
+#vote-ronaldo:checked ~ .carrusel-wrapper .ronaldo .btn,
+#vote-neymar:checked  ~ .carrusel-wrapper .neymar  .btn {
+    background: linear-gradient(45deg, #166534, #15803d);
+    pointer-events: none;
+}
+
+@keyframes pulse {
+    0%   { transform: scale(0.85); }
+    60%  { transform: scale(1.06); }
+    100% { transform: scale(1); }
+}
+
+.celebracion img {
+    width: 82%; max-width: 220px;
+    border-radius: 12px;
+    border: 3px solid #22c55e;
+}
+
+.voted-label {
+    margin-top: 12px;
+    font-size: 1.2rem; font-weight: bold;
+    color: #4ade80;
+    animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 6px #22c55e; }
+    to   { text-shadow: 0 0 22px #4ade80, 0 0 40px #22c55e; }
+}
+
+/* ── PIE DE CARTA ── */
+.footer-info { padding: 8px 15px 14px; font-size: 0.78rem; color: #64748b; }
+
+/* ══════════════════════════════════════
+   FLECHAS DEL CARRUSEL
+   Solo se muestra la flecha correcta según
+   qué carta está activa
+══════════════════════════════════════ */
+.carrusel-nav { position: absolute; top: 40%; width: 100%; pointer-events: none; }
+
+.arr {
+    position: absolute;
+    top: 0;
+    background: rgba(0,0,0,0.55);
+    color: white;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: none;           /* ocultas por defecto */
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    transition: background 0.3s;
+    user-select: none;
+}
+
+.arr:hover { background: rgba(255,255,255,0.25); }
+.arr.prev  { left: 8px; }
+.arr.next  { right: 8px; }
+
+/* Muestra solo las flechas de la carta activa */
+#slide-messi:checked   ~ .carrusel-wrapper .messi-prev,
+#slide-messi:checked   ~ .carrusel-wrapper .messi-next,
+#slide-ronaldo:checked ~ .carrusel-wrapper .ronaldo-prev,
+#slide-ronaldo:checked ~ .carrusel-wrapper .ronaldo-next,
+#slide-neymar:checked  ~ .carrusel-wrapper .neymar-prev,
+#slide-neymar:checked  ~ .carrusel-wrapper .neymar-next { display: flex; }
+
+/* ── PUNTITOS ── */
+.carrusel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.carrusel-dots .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+}
+
+#slide-messi:checked   ~ .carrusel-wrapper .carrusel-dots label:nth-child(1),
+#slide-ronaldo:checked ~ .carrusel-wrapper .carrusel-dots label:nth-child(2),
+#slide-neymar:checked  ~ .carrusel-wrapper .carrusel-dots label:nth-child(3) {
+    background: white;
+    transform: scale(1.4);
+}
+
+/* ── FOOTER ── */
+footer { padding: 16px; background: #020617; margin-top: 10px; font-size: 0.85rem; color: #64748b; }
+
+/* ══════════════════════════════════════
+   MODAL
+══════════════════════════════════════ */
+.modal {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 200;
+    align-items: center; justify-content: center;
+}
+
+.modal:target { display: flex; animation: fadeIn 0.3s ease; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-content {
+    background: #1e293b;
+    border-radius: 20px;
+    padding: 30px;
+    width: 90%; max-width: 460px;
+    animation: slideUp 0.35s ease;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.modal-header h2 { font-size: 1.2rem; }
+.close { font-size: 1.6rem; color: #94a3b8; text-decoration: none; transition: color 0.2s; }
+.close:hover { color: white; }
+
+.vote-stats { display: flex; flex-direction: column; gap: 14px; }
+.stats-bar  { text-align: left; }
+.stat-label { font-size: 0.9rem; display: block; margin-bottom: 5px; color: #cbd5e1; }
+.bar { background: #334155; border-radius: 10px; height: 14px; overflow: hidden; }
+.fill { height: 100%; border-radius: 10px; width: 33%; }
+
+.messi-bar .fill   { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+.ronaldo-bar .fill { background: linear-gradient(90deg, #ef4444, #f87171); }
+.neymar-bar .fill  { background: linear-gradient(90deg, #22c55e, #4ade80); }
